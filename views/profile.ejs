@@ -54,5 +54,10 @@ function openImage(src) {
     document.getElementById('imageOverlay').style.display = 'block';
 }
 </script>
+<% if (isOwner) { %>
+<div style="text-align: center; margin: 20px 0;">
+    <a href="/logout" style="display: inline-block; padding: 10px 20px; background: #999; color: white; text-decoration: none; font-family: 'Courier New', monospace;">Выйти из профиля</a>
+</div>
+<% } %>
 </body>
 </html>

@@ -59,6 +59,18 @@
     </style>
 </head>
 <body>
+    <% if (currentUser) { %>
+    <div style="text-align: right; padding: 10px;">
+        <a href="/profile/<%= currentUser.id %>" style="text-decoration: none; color: #333;">
+            <img src="<%= currentUser.avatar_url %>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #2c3e50; display: block; margin-left: auto;">
+            <span style="display: block; margin-top: 5px; font-weight: bold;"><%= currentUser.nickname %></span>
+        </a>
+    </div>
+    <% } else { %>
+    <div style="text-align: right; padding: 10px;">
+        <a href="/register" style="color: #2c3e50;">Войти / Зарегистрироваться</a>
+    </div>
+    <% } %>
     <div class="header">
         <h1>УЕЗДНЫЙ ГОРОД N</h1>
         <p>— Куда изволите направиться? —</p>

@@ -7,6 +7,10 @@ const path = require('path');
 const db = require('./database');
 
 const app = express();
+const fs = require('fs');
+if (!fs.existsSync('./uploads')) {
+  fs.mkdirSync('./uploads');
+}
 const PORT = 3000;
 
 // Загрузка аватарок
@@ -19,7 +23,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 2 * 1024 * 1024 }
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 // Настройки
