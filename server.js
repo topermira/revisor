@@ -75,12 +75,29 @@ app.get('/', (req, res) => {
 
 // ============ АДМИН-ПАНЕЛЬ ============
 app.get('/admin', (req, res) => {
-  // Если уже вошёл в админку
   if (req.session.isAdmin) {
     const settings = db.prepare('SELECT * FROM settings WHERE id = 1').get();
-    return res.render('admin', { settings, places });
+    const comments = db.prepare(`
+      SELECT comments.*, users.nickname 
+      FROM comments 
+      JOIN users ON comments.user_id = users.id 
+      ORDER BY comments.created_at DESC
+    `).all();
+    return res.render('admin', { settings, places, comments });
   }
   res.render('admin-login', { error: null });
+});
+
+// Удаление комментария
+app.post('/admin/delete-comment', (req, res) => {
+  if (!req.session.isAdmin) return res.redirect('/admin');
+  
+  const commentId = req.body.comment_id;
+  if (commentId) {
+    db.prepare('DELETE FROM comments WHERE id = ?').run(commentId);
+  }
+  
+  res.redirect('/admin');
 });
 
 app.post('/admin', (req, res) => {

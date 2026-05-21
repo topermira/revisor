@@ -37,18 +37,46 @@
             border: none;
             cursor: pointer;
             font-family: 'Courier New', monospace;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 14px;
         }
         .btn:hover { background: #8b0000; }
+        .comment-item {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .comment-text { font-size: 13px; flex: 1; word-break: break-word; }
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .delete-btn:hover { background: #c0392b; }
+        .place-tag {
+            background: #ddd;
+            padding: 2px 6px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+        hr { margin: 20px 0; border: 1px solid #ccc; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>АДМИН-ПАНЕЛЬ</h1>
+        <h1>Админ-панель</h1>
         <p>Управление городом N</p>
     </div>
 
+    <h2>Настройки заведений</h2>
     <form action="/admin" method="POST">
         <div class="setting">
             <label>
@@ -57,20 +85,40 @@
             </label>
         </div>
 
-        <h3>Открыть/закрыть заведения:</h3>
-
         <% Object.keys(places).forEach(key => { %>
             <div class="setting">
                 <label>
                     <input type="checkbox" name="<%= key %>_open" <%= settings[key + '_open'] ? 'checked' : '' %>>
-                    <strong><%= places[key].icon %> <%= places[key].name %></strong>
+                    <strong><%= places[key].name %></strong>
                 </label>
             </div>
         <% }); %>
 
         <button type="submit" class="btn">Сохранить настройки</button>
-        <p style="margin-top: 15px;"><a href="/?admin-logout" style="color: #c0392b;">🚪 Выйти из админки</a></p>
     </form>
+
+    <p><a href="/?logout=admin">Выйти из админки</a></p>
+
+    <hr>
+
+    <h2>Все комментарии</h2>
+    <% if (comments.length === 0) { %>
+        <p>Комментариев пока нет.</p>
+    <% } %>
+
+    <% comments.forEach(comment => { %>
+        <div class="comment-item">
+            <div>
+                <span class="place-tag"><%= comment.place %></span>
+                <strong><%= comment.nickname %></strong>
+                <span class="comment-text"><%= comment.text.substring(0, 80) %><%= comment.text.length > 80 ? '...' : '' %></span>
+            </div>
+            <form action="/admin/delete-comment" method="POST" style="display:inline;">
+                <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                <button type="submit" class="delete-btn" onclick="return confirm('Удалить этот комментарий?')">Удалить</button>
+            </form>
+        </div>
+    <% }); %>
 
     <p style="margin-top: 20px;"><a href="/">← В меню</a></p>
 </body>
