@@ -144,7 +144,10 @@ Object.keys(places).forEach(place => {
 });
 
 // Регистрация
-app.get('/register', (req, res) => res.render('register', { error: null }));
+app.get('/register', (req, res) => {
+  req.session.returnTo = req.get('Referer') || '/hospital';
+  res.render('register', { error: null });
+});
 
 app.post('/register', upload.single('avatar'), async (req, res) => {
   const { nickname, password } = req.body;
@@ -159,7 +162,7 @@ app.post('/register', upload.single('avatar'), async (req, res) => {
       [nickname, password_hash, avatar_url, currentYear]);
     
     req.session.userId = result.rows[0].id;
-    res.redirect('/hospital');
+    res.redirect(req.session.returnTo || '/hospital');
   } catch (e) {
     if (e.code === '23505') return res.render('register', { error: 'Такой ник уже занят!' });
     res.render('register', { error: 'Ошибка при регистрации' });
@@ -167,7 +170,10 @@ app.post('/register', upload.single('avatar'), async (req, res) => {
 });
 
 // Вход
-app.get('/login', (req, res) => res.render('login', { error: null }));
+app.get('/login', (req, res) => {
+  req.session.returnTo = req.get('Referer') || '/hospital';
+  res.render('login', { error: null });
+});
 
 app.post('/login', async (req, res) => {
   const { nickname, password } = req.body;
@@ -179,7 +185,7 @@ app.post('/login', async (req, res) => {
     if (!match) return res.render('login', { error: 'Неверный ник или пароль' });
     
     req.session.userId = user.rows[0].id;
-    res.redirect('/hospital');
+    res.redirect(req.session.returnTo || '/hospital');
   } catch (e) {
     res.render('login', { error: 'Ошибка при входе' });
   }
