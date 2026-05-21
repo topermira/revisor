@@ -38,9 +38,9 @@ app.get('/avatar/:id', async (req, res) => {
       res.writeHead(200, { 'Content-Type': user.rows[0].avatar_mime || 'image/png', 'Content-Length': img.length });
       res.end(img);
     } else {
-      // Дефолтная аватарка — серый кружок
-      const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><circle cx="100" cy="100" r="100" fill="#ccc"/><text x="100" y="120" text-anchor="middle" font-size="80" fill="white">?</text></svg>';
-      res.writeHead(200, { 'Content-Type': 'image/svg+xml' });
+      // Возвращаем дефолтную SVG-аватарку
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="#ccc"/><text x="100" y="130" text-anchor="middle" font-size="100" fill="white">?</text></svg>`;
+      res.writeHead(200, { 'Content-Type': 'image/svg+xml', 'Content-Length': Buffer.byteLength(svg) });
       res.end(svg);
     }
   } catch (e) {
