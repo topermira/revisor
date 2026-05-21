@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уездный город N</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #f5f0e8;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border: 5px solid #1a252f;
+            margin-bottom: 30px;
+        }
+        .header h1 { margin: 0; font-size: 28px; }
+        .header p { margin: 5px 0 0; font-style: italic; }
+        .menu-list { list-style: none; padding: 0; }
+        .menu-list li { margin: 10px 0; }
+        .menu-list a {
+            display: block;
+            padding: 15px;
+            background: white;
+            border: 3px solid #2c3e50;
+            text-decoration: none;
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .menu-list a:hover { background: #2c3e50; color: white; }
+        .menu-list .closed a {
+            background: #eee;
+            border-color: #ccc;
+            color: #999;
+            text-decoration: line-through;
+        }
+        .menu-list .closed a:hover { background: #eee; color: #999; }
+        .menu-list .desc { font-size: 13px; color: #777; font-weight: normal; display: block; }
+        .menu-list a:hover .desc { color: #ddd; }
+        .admin-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .admin-link:hover { background: #c0392b; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>УЕЗДНЫЙ ГОРОД N</h1>
+        <p>— Куда изволите направиться? —</p>
+    </div>
+
+    <ul class="menu-list">
+        <% Object.keys(places).forEach(key => { %>
+            <li class="<%= !settings[key + '_open'] ? 'closed' : '' %>">
+                <a href="/<%= key %>">
+                    <%= places[key].icon %> <%= places[key].name %>
+                    <span class="desc"><%= places[key].chief %> <%= !settings[key + '_open'] ? '(ЗАКРЫТО)' : '' %></span>
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+
+    <a href="/admin" style="position: fixed; bottom: 5px; right: 5px; font-size: 10px; color: #ccc; text-decoration: none; font-family: 'Courier New', monospace;">админ</a>
+    <p style="color: #999; font-style: italic; margin-top: 20px;">— А не поехать ли к Хлестакову в гостиницу? —</p>
+</body>
+</html>

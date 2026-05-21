@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пациента</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>РЕГИСТРАЦИЯ ПАЦИЕНТА</h1>
+        <p>Заполните анкету. И не бойтесь — у нас всё по ГОСТу!</p>
+    </div>
+
+    <% if (error) { %>
+        <div class="error"><%= error %></div>
+    <% } %>
+
+    <div style="background: white; padding: 20px; border: 2px solid #999; margin: 20px 0;">
+        <form action="/register" method="POST" enctype="multipart/form-data">
+            <label>Никнейм:</label>
+            <input type="text" name="nickname" placeholder="Как вас записать в журнал?" required>
+            
+            <label>Пароль:</label>
+            <input type="password" name="password" placeholder="Чтобы никто не украл ваш диагноз" required>
+            
+            <label>Аватарка (не обязательно):</label>
+            <input type="file" name="avatar" accept="image/*">
+            
+            <button type="submit" class="btn">Зарегистрироваться в больнице</button>
+        </form>
+    </div>
+
+    <p>Уже лечились у нас? <a href="/login">Войти</a></p>
+    <p><a href="/">← На главную</a></p>
+</body>
+</html>

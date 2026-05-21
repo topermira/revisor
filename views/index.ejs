@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Больница имени Земляники</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="/" style="color: white; float: left; text-decoration: none;">← В меню</a>
+        <h1>БОЛЬНИЦА ИМЕНИ ЗЕМЛЯНИКИ</h1>
+        <p>Лечим всё! Особенно хорошо — от жадности и хамства!</p>
+        <p><em>— Артемий Филиппович Земляника, попечитель богоугодных заведений</em></p>
+    </div>
+
+    <div style="margin: 20px 0;">
+        <% if (currentUser) { %>
+            <p>Вы вошли как: <strong><%= currentUser.nickname %></strong> 
+            <a href="/profile/<%= currentUser.id %>" class="btn">Мой профиль</a>
+            <a href="/logout" class="btn">Выйти</a></p>
+        <% } else { %>
+            <a href="/register" class="btn">Зарегистрироваться</a>
+            <a href="/login" class="btn">Войти</a>
+        <% } %>
+    </div>
+
+    <% if (currentUser) { %>
+        <div style="background: white; padding: 15px; border: 2px solid #999; margin: 20px 0;">
+            <h3>Оставить жалобу... то есть отзыв!</h3>
+            <form action="/comment" method="POST">
+                <textarea name="text" rows="3" placeholder="Пишите, больной, пишите..."></textarea>
+                <button type="submit" class="btn">Отправить</button>
+            </form>
+        </div>
+    <% } %>
+
+    <h2>Жалобная книга:</h2>
+
+    <% if (comments.length === 0) { %>
+        <p>Пока никто не жаловался. Быть может, все выздоровели? Или наоборот...</p>
+    <% } %>
+
+    <% comments.forEach(comment => { %>
+        <div class="comment">
+            <a href="/profile/<%= comment.user_id %>" class="avatar-link">
+                <img src="<%= comment.avatar_url %>" alt="Аватар" class="avatar">
+            </a>
+            <div class="comment-body">
+                <span class="comment-author"><%= comment.nickname %></span>
+                <span style="color: #999; font-size: 12px;"><%= new Date(new Date(comment.created_at).getTime() + 3*60*60*1000).toLocaleString('ru-RU') %></span>
+                <p class="comment-text"><%= comment.text %></p>
+            </div>
+        </div>
+    <% }); %>
+</body>
+</html>

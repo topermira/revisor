@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в админку</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #f5f0e8;
+            color: #333;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border: 5px solid #1a252f;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #999;
+            font-family: 'Courier New', monospace;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #c0392b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn:hover { background: #8b0000; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>АДМИН-ПАНЕЛЬ</h1>
+        <p>Введите пароль</p>
+    </div>
+
+    <% if (error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
+
+    <form action="/admin" method="POST">
+        <input type="password" name="admin_password" placeholder="Пароль" required>
+        <button type="submit" class="btn">Войти</button>
+    </form>
+
+    <p><a href="/">← В меню</a></p>
+</body>
+</html>

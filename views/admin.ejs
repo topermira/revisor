@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #f5f0e8;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border: 5px solid #1a252f;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .setting {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #999;
+        }
+        label { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #c0392b;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn:hover { background: #8b0000; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>АДМИН-ПАНЕЛЬ</h1>
+        <p>Управление городом N</p>
+    </div>
+
+    <form action="/admin" method="POST">
+        <div class="setting">
+            <label>
+                <input type="checkbox" name="show_time" <%= settings.show_time ? 'checked' : '' %>>
+                <strong>Показывать время в комментариях</strong>
+            </label>
+        </div>
+
+        <h3>Открыть/закрыть заведения:</h3>
+
+        <% Object.keys(places).forEach(key => { %>
+            <div class="setting">
+                <label>
+                    <input type="checkbox" name="<%= key %>_open" <%= settings[key + '_open'] ? 'checked' : '' %>>
+                    <strong><%= places[key].icon %> <%= places[key].name %></strong>
+                </label>
+            </div>
+        <% }); %>
+
+        <button type="submit" class="btn">Сохранить настройки</button>
+        <p style="margin-top: 15px;"><a href="/?admin-logout" style="color: #c0392b;">🚪 Выйти из админки</a></p>
+    </form>
+
+    <p style="margin-top: 20px;"><a href="/">← В меню</a></p>
+</body>
+</html>

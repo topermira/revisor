@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в больницу</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>ВХОД В БОЛЬНИЦУ</h1>
+        <p>Предъявите документы... то есть ник и пароль!</p>
+    </div>
+
+    <% if (error) { %>
+        <div class="error"><%= error %></div>
+    <% } %>
+
+    <div style="background: white; padding: 20px; border: 2px solid #999; margin: 20px 0;">
+        <form action="/login" method="POST">
+            <label>Никнейм:</label>
+            <input type="text" name="nickname" placeholder="Ваш позывной" required>
+            
+            <label>Пароль:</label>
+            <input type="password" name="password" placeholder="Секретное слово" required>
+            
+            <button type="submit" class="btn">Войти в палату</button>
+        </form>
+    </div>
+
+    <p>Впервые у нас? <a href="/register">Зарегистрироваться</a></p>
+    <p><a href="/">← На главную</a></p>
+</body>
+</html>

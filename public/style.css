@@ -1,0 +1,100 @@
+body {
+    font-family: 'Courier New', monospace;
+    background: #f0f0e0;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background: #c0392b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border: 5px solid #8b0000;
+}
+
+.comment {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #c0392b;
+    flex-shrink: 0;
+    display: block;
+    overflow: hidden;
+}
+
+.avatar-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #c0392b;
+}
+
+.avatar-link {
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #c0392b;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #c0392b;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+}
+
+.btn:hover {
+    background: #8b0000;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #999;
+    font-family: 'Courier New', monospace;
+    box-sizing: border-box;
+}
+
+.error {
+    color: red;
+    background: #ffe0e0;
+    padding: 10px;
+    margin: 10px 0;
+}
+.comment-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
