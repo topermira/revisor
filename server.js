@@ -156,7 +156,7 @@ app.post('/register', upload.single('avatar'), async (req, res) => {
     res.redirect(req.session.returnTo || '/hospital');
   } catch (e) {
     if (e.code === '23505') return res.render('register', { error: 'Такой ник уже занят!' });
-    res.render('register', { error: 'Ошибка при регистрации' });
+    res.render('register', { error: 'Ошибка ' + e.message });
   }
 });
 
