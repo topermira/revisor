@@ -103,11 +103,20 @@ app.post('/admin/delete-comment', (req, res) => {
 app.post('/admin', (req, res) => {
   // Если это вход в админку
   if (req.body.admin_password) {
-    if (req.body.admin_password === '123456') {
+    console.log('Попытка входа в админку');
+    if (req.body.admin_password === 'revizor123') {
+      console.log('Пароль верный');
       req.session.isAdmin = true;
       const settings = db.prepare('SELECT * FROM settings WHERE id = 1').get();
-      return res.render('admin', { settings, places });
+      const comments = db.prepare(`
+        SELECT comments.*, users.nickname 
+        FROM comments 
+        JOIN users ON comments.user_id = users.id 
+        ORDER BY comments.created_at DESC
+      `).all();
+      return res.render('admin', { settings, places, comments });
     }
+    console.log('Пароль неверный');
     return res.render('admin-login', { error: 'Неверный пароль!' });
   }
   
