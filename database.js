@@ -5,7 +5,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
-// Создаём таблицы при запуске
 async function initDB() {
   const client = await pool.connect();
   try {
@@ -15,6 +14,8 @@ async function initDB() {
         nickname TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
         avatar_url TEXT DEFAULT '/uploads/default.png',
+        avatar_data TEXT,
+        avatar_mime TEXT DEFAULT 'image/png',
         registered_year INTEGER DEFAULT 2026
       );
 

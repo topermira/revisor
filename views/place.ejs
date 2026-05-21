@@ -58,7 +58,7 @@
     <% comments.forEach(comment => { %>
         <div class="comment">
             <a href="/profile/<%= comment.user_id %>" class="avatar-link">
-                <img src="<%= comment.avatar_url %>" alt="Аватар" class="avatar">
+                <img src="/avatar/<%= comment.uid %>" alt="Аватар" class="avatar">
             </a>
             <div class="comment-body">
                 <span class="comment-author"><%= comment.nickname %></span>
