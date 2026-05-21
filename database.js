@@ -13,9 +13,6 @@ async function initDB() {
         id SERIAL PRIMARY KEY,
         nickname TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
-        avatar_url TEXT DEFAULT '/uploads/default.png',
-        avatar_data TEXT,
-        avatar_mime TEXT DEFAULT 'image/png',
         registered_year INTEGER DEFAULT 2026
       );
 
@@ -39,6 +36,11 @@ async function initDB() {
         police_open INTEGER DEFAULT 1
       );
     `);
+    
+    // Добавляем колонки, если их нет (для старых баз)
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_data TEXT`);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_mime TEXT DEFAULT 'image/png'`);
+    
     await client.query(`INSERT INTO settings (id) VALUES (1) ON CONFLICT DO NOTHING`);
   } finally {
     client.release();
