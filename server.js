@@ -277,15 +277,23 @@ app.post('/profile/:id', upload.single('avatar'), async (req, res) => {
 app.post('/comment/:place', (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
   
-  const { text } = req.body;
+  const { text, rating } = req.body;
   const place = req.params.place;
   
   if (text.trim()) {
-    db.prepare('INSERT INTO comments (user_id, place, text) VALUES (?, ?, ?)').run(req.session.userId, place, text);
+    db.prepare('INSERT INTO comments (user_id, place, text, rating) VALUES (?, ?, ?, ?)').run(req.session.userId, place, text, rating || 0);
   }
   
   res.redirect('/' + place);
 });
+
+// Добавляем колонку rating, если её нет
+try {
+  db.exec('ALTER TABLE comments ADD COLUMN rating INTEGER DEFAULT 0');
+  console.log('Колонка rating добавлена');
+} catch (e) {
+  // Уже существует — игнорируем
+}
 
 // ============ ЗАПУСК ============
 app.listen(PORT, '0.0.0.0', () => {

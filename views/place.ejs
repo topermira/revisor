@@ -32,7 +32,18 @@
         <div style="background: white; padding: 15px; border: 2px solid #999; margin: 20px 0;">
             <h3>Оставить отзыв:</h3>
             <form action="/comment/<%= place %>" method="POST">
-                <textarea name="text" rows="3" class="comment-text" placeholder="Ваше мнение..."></textarea>
+                <textarea name="text" rows="3" class="comment-text" placeholder="Ваше мнение..." required></textarea>
+                <div style="margin: 10px 0;">
+                    <label>Оценка:</label>
+                    <select name="rating" style="font-family: 'Courier New', monospace; padding: 5px;">
+                        <option value="0">Без оценки</option>
+                        <option value="1">★ 1 звезда</option>
+                        <option value="2">★★ 2 звезды</option>
+                        <option value="3">★★★ 3 звезды</option>
+                        <option value="4">★★★★ 4 звезды</option>
+                        <option value="5">★★★★★ 5 звёзд</option>
+                    </select>
+                </div>
                 <button type="submit" class="btn">Отправить</button>
             </form>
         </div>
@@ -54,6 +65,13 @@
                 <% if (settings.show_time) { %>
                     <span style="color: #999; font-size: 12px;"><%= new Date(new Date(comment.created_at).getTime() + 3*60*60*1000).toLocaleString('ru-RU') %></span>
                 <% } %>
+                <% if (comment.rating > 0) { %>
+                    <p style="color: #f39c12; margin: 5px 0;">
+                        <% for (let i = 0; i < comment.rating; i++) { %>★<% } %>
+                        <% for (let i = comment.rating; i < 5; i++) { %>☆<% } %>
+                    </p>
+                <% } %>
+                <p class="comment-text"><%= comment.text %></p>
                 <p class="comment-text"><%= comment.text %></p>
             </div>
         </div>
